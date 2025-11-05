@@ -20,3 +20,7 @@ Déployer, orchestrer et mettre à l'échelle des applications sur un cluster Ku
 Définir les objets Kubernetes essentiels (Pods, Déploiements, Services, Volumes, etc.).
 Appliquer des stratégies d'orchestration avancées (mises à jour sans interruption, auto-réparation).
 Intégrer un pipeline CI/CD pour automatiser les déploiements conteneurisés en production.
+
+## Links
+
+Dataset : https://www.kaggle.com/datasets/mrmars1010/cars-india-pre-owned
