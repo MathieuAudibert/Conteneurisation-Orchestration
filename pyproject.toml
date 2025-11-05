@@ -1,0 +1,6 @@
+[project]
+name="Conteneurisation-Orchestration"
+version="0.0.0"
+authors=["AGOSTINO Romeo", "BIGAND Theo", "DRAME Moussa", "AUDIBERT Mathieu"]
+readme="README.md"
+requires-python=">=3.10"
