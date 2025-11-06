@@ -1,0 +1,8 @@
+name: Call PR Workflow
+
+on:
+  push:
+
+jobs:
+  call-pr-workflow:
+    uses: ./.github/workflows/pr.yaml

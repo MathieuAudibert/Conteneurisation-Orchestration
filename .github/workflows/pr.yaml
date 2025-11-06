@@ -1,0 +1,32 @@
+name: Create PR to develop on branch creation
+
+on:
+  create:
+    branches:
+      - 'feature/**'
+      - 'hotfix/**'
+      - 'fix/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    if: ${{ github.event.ref_type == 'branch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout created branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Create Pull Request to develop
+        uses: peter-evans/create-pull-request@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: develop
+          title: "Draft: Automatic PR: ${{ github.ref_name }} → develop"
+          body: "Branche `${{ github.ref_name }}` créée — PR automatique vers `develop`."
+          draft: false
+          maintainer-can-modify: true
