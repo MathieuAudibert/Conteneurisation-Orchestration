@@ -9,7 +9,7 @@ class Logs:
     _action: str
     _metadata: str
     
-    def __post__init__(self):
+    def __post_init__(self):
         self.created_at = self.__created_at
         self.timestamp = self.__timestamp
         self.user_id = self._user_id
