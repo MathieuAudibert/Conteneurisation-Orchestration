@@ -18,5 +18,5 @@ class ConnectDbAdm:
             print(f"[ERROR]: error while connecting to db - {e}")
 
 load_dotenv()
-con = ConnectDbAdm(uri=os.getenv("ADM_MONGO_URI"), db_name="Cars")
-# con.connect() test
+conDbAdm = ConnectDbAdm(uri=os.getenv("ADM_MONGO_URI"), db_name="Cars")
+# conDbAdm.connect() test

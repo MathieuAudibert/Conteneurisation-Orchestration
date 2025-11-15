@@ -1,8 +1,10 @@
-__version__ = "2.0"
+__version__ = "2.1"
 __description__ = "Package to handle database"
 
-from .classes.connect.connectAdmin import ConnectDbAdm
-# from .classes.connect.connect import ConnectDb
-from db import ConnectDbAdm
+# FIXME: refactor ConnectDb and ConnectDbAdm les classes sont pareilles la chose qui differe c la variable d'env...
 
-__all__ = ['ConnectDbAdm']
+from .classes.connect.connectAdmin import ConnectDbAdm
+from .classes.connect.connect import ConnectDb
+from db import ConnectDbAdm, ConnectDb
+
+__all__ = ['ConnectDbAdm', 'ConnectDb']

@@ -26,7 +26,7 @@ class Cars:
     _km_driven: int
     _usage_category: str
     _ownership: int
-    _ownsership_category: str
+    _ownership_category: str
     _price: int
     _overall_cost: int
     _total_value: int
@@ -57,7 +57,7 @@ class Cars:
         self.km_driven = self._km_driven
         self.usage_category = self._usage_category
         self.ownership = self._ownership
-        self.ownsership_category = self._ownsership_category
+        self.ownership_category = self._ownership_category
         self.price = self._price
         self.overall_cost = self._overall_cost
         self.total_value = self._total_value
@@ -126,8 +126,8 @@ class Cars:
         return self._ownership
 
     @property
-    def ownsership_category(self):
-        return self._ownsership_category
+    def ownership_category(self):
+        return self._ownership_category
 
     @property
     def price(self):
@@ -261,11 +261,11 @@ class Cars:
             raise TypeError("[ERROR]: ownership must be int")
         self._ownership = value
 
-    @ownsership_category.setter
-    def ownsership_category(self, value: str):
+    @ownership_category.setter
+    def ownership_category(self, value: str):
         if not isinstance(value, str):
-            raise TypeError("[ERROR]: ownsership_category must be str")
-        self._ownsership_category = value
+            raise TypeError("[ERROR]: ownership_category must be str")
+        self._ownership_category = value
 
     @price.setter
     def price(self, value: int):
