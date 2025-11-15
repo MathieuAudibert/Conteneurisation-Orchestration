@@ -17,9 +17,15 @@ def _resolve_path(file_path):
     project_root = Path(__file__).resolve().parents[2]
 
     fp = Path(file_path)
-    if fp.parts and fp.parts[0] == "cfg":
+    if fp.parts and fp.parts[0].lower() == "cfg":
+        repo_cfg_candidate = project_root.parent / fp
+        if repo_cfg_candidate.exists():
+            return repo_cfg_candidate.resolve()
         return (project_root / fp).resolve()
     else:
+        repo_cfg_candidate = project_root.parent / "cfg" / fp  
+        if repo_cfg_candidate.exists():
+            return repo_cfg_candidate.resolve()
         return (project_root / "cfg" / fp).resolve()
 
 
@@ -37,6 +43,6 @@ def extract(file_path):
 
 
 if __name__ == "__main__":
-    default_file = os.environ.get("DEFAULT_FILE", "raw/pre-owned dataset-cars-dirty.csv")
+    default_file = os.environ.get("DEFAULT_FILE", "dataset-cars-dirty.csv")
     cars = extract(default_file)
     print(cars.head())
