@@ -1,6 +1,6 @@
 [project]
 name="Conteneurisation-Orchestration"
-version="1.4.0"
+version="1.4.1"
 authors=[
     {name = "AGOSTINO Romeo"}, 
     {name = "BIGAND Theo"}, 
