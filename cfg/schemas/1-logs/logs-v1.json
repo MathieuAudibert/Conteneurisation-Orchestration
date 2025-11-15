@@ -1,0 +1,12 @@
+{
+    "$id": "log_v1",
+    "type": "object",
+    "properties": {
+        "_id": {"type": "string"},
+        "created_at": {"type": "Date", "format": "ISO"},
+        "timestamp": {"type": "Date", "format": "ISO"},
+        "action": {"type": "string"},
+        "metadata": {"type": "string"}
+    },
+    "required": ["_id","created_at", "timestamp"]
+}
