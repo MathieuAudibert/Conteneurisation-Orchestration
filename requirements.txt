@@ -1,0 +1,4 @@
+dnspython==2.8.0
+dotenv==0.9.9
+pymongo==4.15.4
+python-dotenv==1.2.1
