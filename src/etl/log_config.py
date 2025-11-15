@@ -1,10 +1,8 @@
 import logging
 import os
 
-# Ensure the logs directory exists
 os.makedirs("logs", exist_ok=True)
 
-# Logging configuration
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
