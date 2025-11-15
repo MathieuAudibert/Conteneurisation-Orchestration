@@ -1,4 +1,4 @@
-__version__ = "2.0"
+__version__ = "2.1"
 __description__ = "Package to handle database"
 
 from .classes.connect.connectAdmin import ConnectDbAdm
