@@ -14,3 +14,5 @@ extractMongo() {
     mongosh "$ADM_MONGO_URI" --eval "const cars=db.cars.find().toArray(); const logs=db.logs.find().toArray(); print(JSON.stringify({cars, logs}, null, 2));" > "files/${TODAY}.json"
     echo "[$TODAY]: extraction successful"
 }
+
+extractMongo
