@@ -16,7 +16,7 @@ class Logs:
         self.action = self._action
 
     # le code suivant sert a s'assurer que les champs soient du bon type 
-    # en gros : si user_id.type = char --> ERREUR
+    # en gros : si user_id.type = str --> ERREUR
 
     @property
     def user_id(self):
