@@ -18,12 +18,10 @@ jobs:
       - name: Check if relevant files changed
         id: check_files
         run: |
-          # Get list of changed files in the last commit
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           echo "Changed files:"
           echo "$CHANGED_FILES"
           
-          # Check if pyproject.toml or any __init__.py file was modified
           if echo "$CHANGED_FILES" | grep -qE '(pyproject\.toml|__init__\.py)'; then
             echo "Relevant files changed"
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -39,20 +37,27 @@ jobs:
           python-version: '3.x'
 
       - name: Extract pyproject.toml base version
+        if: steps.check_files.outputs.changed == 'true'
         id: pyproject_version
         run: |
-          VERSION=$(grep -Po '(?<=^version = ")[^"]+' pyproject.toml)
+          VERSION=$(grep -E '^version\s*=\s*"[^"]+"' pyproject.toml | sed -E 's/^version\s*=\s*"([^"]+)"/\1/')
+          
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not find version in pyproject.toml"
+            cat pyproject.toml | grep -i version || true
+            exit 1
+          fi
+          
           echo "Current pyproject.toml version: $VERSION"
           
-          # Extract the reference number (first number)
           REFERENCE=$(echo "$VERSION" | cut -d. -f1)
           echo "reference=$REFERENCE" >> $GITHUB_OUTPUT
           echo "current_version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Calculate sum of all __init__.py versions
+        if: steps.check_files.outputs.changed == 'true'
         id: init_versions
         run: |
-          # Find all __version__ declarations and extract the version numbers
           TOTAL_MAJOR=0
           TOTAL_MINOR=0
           
@@ -77,6 +82,7 @@ jobs:
           echo "minor=$TOTAL_MINOR" >> $GITHUB_OUTPUT
 
       - name: Calculate new version
+        if: steps.check_files.outputs.changed == 'true'
         id: new_version
         run: |
           REFERENCE="${{ steps.pyproject_version.outputs.reference }}"
@@ -88,6 +94,7 @@ jobs:
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Update pyproject.toml if changed
+        if: steps.check_files.outputs.changed == 'true'
         id: update_file
         run: |
           CURRENT_VERSION="${{ steps.pyproject_version.outputs.current_version }}"
@@ -103,7 +110,7 @@ jobs:
           fi
 
       - name: Commit and push version update
-        if: steps.update_file.outputs.changed == 'true'
+        if: steps.check_files.outputs.changed == 'true' && steps.update_file.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -112,6 +119,7 @@ jobs:
           git push
 
       - name: Check if tag exists
+        if: steps.check_files.outputs.changed == 'true'
         id: check_tag
         run: |
           TAG="v${{ steps.new_version.outputs.version }}"
@@ -124,7 +132,7 @@ jobs:
           fi
 
       - name: Create and push tag
-        if: steps.check_tag.outputs.exists == 'false'
+        if: steps.check_files.outputs.changed == 'true' && steps.check_tag.outputs.exists == 'false'
         run: |
           TAG="v${{ steps.new_version.outputs.version }}"
           echo "Creating tag: $TAG"
