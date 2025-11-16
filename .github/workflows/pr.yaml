@@ -1,11 +1,7 @@
-name: Create PR to develop on branch creation
+name: Create PR to develop
 
 on:
-  push:
-    branches:
-      - 'feature/**'
-      - 'refactor/**'
-      - 'fix/**'
+  workflow_call:
 
 permissions:
   contents: read
@@ -13,20 +9,50 @@ permissions:
 
 jobs:
   create-pr:
-    if: ${{ github.event.ref_type == 'branch' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout created branch
+      - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref }}
+          fetch-depth: 0
 
-      - name: Create Pull Request to develop
-        uses: peter-evans/create-pull-request@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          base: develop
-          title: "Draft: Automatic PR: ${{ github.ref_name }} → develop"
-          body: "Branche `${{ github.ref_name }}` créée — PR automatique vers `develop`."
-          draft: false
-          maintainer-can-modify: true
+      - name: Check if PR already exists
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="${{ github.event.ref }}"
+          # Remove refs/heads/ prefix if present
+          BRANCH_NAME="${BRANCH_NAME#refs/heads/}"
+          
+          # Check if a PR already exists for this branch targeting develop
+          PR_EXISTS=$(gh pr list --head "$BRANCH_NAME" --base develop --json number --jq 'length')
+          
+          if [ "$PR_EXISTS" -gt 0 ]; then
+            echo "PR already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "No PR exists"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create Pull Request
+        if: steps.check_pr.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="${{ steps.check_pr.outputs.branch }}"
+          
+          gh pr create \
+            --base develop \
+            --head "$BRANCH_NAME" \
+            --title "Draft: Automatic PR: $BRANCH_NAME → develop" \
+            --body "Branch \`$BRANCH_NAME\` created — automatic PR to \`develop\`." \
+            --draft
+
+      - name: PR already exists
+        if: steps.check_pr.outputs.exists == 'true'
+        run: |
+          echo "Pull request already exists for branch ${{ steps.check_pr.outputs.branch }}"

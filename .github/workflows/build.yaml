@@ -5,20 +5,32 @@ on:
     branches:
       - '**'
   create:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
+      - 'refactor/**'
 
 jobs:
   update-version:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Call versions.yaml workflow
-        uses: ./.github/workflows/versions.yaml
-        with:
-          file: pyproject.toml
+    if: |
+      github.event_name == 'push' && (
+        contains(github.event.head_commit.modified, 'pyproject.toml') ||
+        contains(github.event.head_commit.modified, '__init__.py') ||
+        contains(github.event.head_commit.added, '__init__.py')
+      )
+    uses: ./.github/workflows/versions.yaml
+    secrets: inherit
 
   open-pr:
-    if: github.event_name == 'create' && (startsWith(github.ref_name, 'feature') || startsWith(github.ref_name, 'fix') || startsWith(github.ref_name, 'refactor'))
+    if: |
+      github.event_name == 'create' && 
+      github.event.ref_type == 'branch' && (
+        startsWith(github.event.ref, 'feature/') ||
+        startsWith(github.event.ref, 'fix/') ||
+        startsWith(github.event.ref, 'refactor/')
+      )
     uses: ./.github/workflows/pr.yaml
-    with:
-      file: versions.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pull-requests: write
