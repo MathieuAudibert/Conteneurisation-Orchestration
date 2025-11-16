@@ -20,6 +20,8 @@ jobs:
       )
     uses: ./.github/workflows/versions.yaml
     secrets: inherit
+    permissions:
+      contents: write
 
   open-pr:
     if: |
