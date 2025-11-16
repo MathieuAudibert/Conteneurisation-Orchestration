@@ -13,9 +13,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 2
+
+      - name: Check if relevant files changed
+        id: check_files
+        run: |
+          # Get list of changed files in the last commit
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          # Check if pyproject.toml or any __init__.py file was modified
+          if echo "$CHANGED_FILES" | grep -qE '(pyproject\.toml|__init__\.py)'; then
+            echo "Relevant files changed"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No relevant files changed"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
 
       - name: Set up Python
+        if: steps.check_files.outputs.changed == 'true'
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'

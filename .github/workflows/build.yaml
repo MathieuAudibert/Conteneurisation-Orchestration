@@ -12,12 +12,7 @@ on:
 
 jobs:
   update-version:
-    if: |
-      github.event_name == 'push' && (
-        contains(github.event.head_commit.modified, 'pyproject.toml') ||
-        contains(github.event.head_commit.modified, '__init__.py') ||
-        contains(github.event.head_commit.added, '__init__.py')
-      )
+    if: github.event_name == 'push'
     uses: ./.github/workflows/versions.yaml
     secrets: inherit
     permissions:
