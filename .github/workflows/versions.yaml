@@ -109,14 +109,25 @@ jobs:
           
           if [ "$CURRENT_VERSION" != "$NEW_VERSION" ]; then
             echo "Updating pyproject.toml from $CURRENT_VERSION to $NEW_VERSION"
-            sed -i "s/^version = \"$CURRENT_VERSION\"/version = \"$NEW_VERSION\"/" pyproject.toml
+            
+            # Show the current version line
+            echo "Current version line in pyproject.toml:"
+            grep -E '^version\s*=' pyproject.toml
+            
+            # Use a more robust sed command that handles any whitespace
+            sed -i -E "s/(^version\s*=\s*\")$CURRENT_VERSION(\")/\1$NEW_VERSION\2/" pyproject.toml
+            
+            # Show the updated version line
+            echo "Updated version line in pyproject.toml:"
+            grep -E '^version\s*=' pyproject.toml
             
             # Verify the change was made
-            if grep -q "version = \"$NEW_VERSION\"" pyproject.toml; then
+            if grep -q "version = \"$NEW_VERSION\"" pyproject.toml || grep -q "version=\"$NEW_VERSION\"" pyproject.toml; then
               echo "Version successfully updated in pyproject.toml"
               echo "changed=true" >> $GITHUB_OUTPUT
             else
               echo "Error: Failed to update version in pyproject.toml"
+              cat pyproject.toml | grep -A2 -B2 version
               exit 1
             fi
           else
