@@ -1,7 +1,26 @@
 from pathlib import Path
 import os
+import sys
 import pandas as pd
-from log_config import get_logger
+
+try:
+    from .log_config import get_logger
+except Exception:
+    _here = Path(__file__).resolve()
+    project_root = _here.parents[2]
+    src_dir = project_root / "src"
+    if src_dir.exists():
+        sys.path.insert(0, str(src_dir))
+    else:
+        sys.path.insert(0, str(project_root))
+
+    try:
+        from src.etl.log_config import get_logger
+    except Exception:
+        try:
+            from log_config import get_logger
+        except Exception:
+            raise
 
 logger = get_logger(__name__)
 
