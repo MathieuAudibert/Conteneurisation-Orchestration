@@ -1,0 +1,165 @@
+name: Version Management
+
+on:
+  workflow_call:
+
+permissions:
+  contents: write
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if relevant files changed
+        id: check_files
+        run: |
+          CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+          
+          if echo "$CHANGED_FILES" | grep -qE '(pyproject\.toml|__init__\.py)'; then
+            echo "Relevant files changed"
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "No relevant files changed"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up Python
+        if: steps.check_files.outputs.changed == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Extract pyproject.toml base version
+        if: steps.check_files.outputs.changed == 'true'
+        id: pyproject_version
+        run: |
+          VERSION=$(grep -E '^version\s*=\s*"[^"]+"' pyproject.toml | sed -E 's/^version\s*=\s*"([^"]+)"/\1/')
+          
+          if [ -z "$VERSION" ]; then
+            echo "Error: Could not find version in pyproject.toml"
+            cat pyproject.toml | grep -i version || true
+            exit 1
+          fi
+          
+          echo "Current pyproject.toml version: $VERSION"
+          
+          REFERENCE=$(echo "$VERSION" | cut -d. -f1)
+          echo "reference=$REFERENCE" >> $GITHUB_OUTPUT
+          echo "current_version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Calculate sum of all __init__.py versions
+        if: steps.check_files.outputs.changed == 'true'
+        id: init_versions
+        run: |
+          TOTAL_MAJOR=0
+          TOTAL_MINOR=0
+          
+          echo "Finding all __init__.py files with __version__..."
+          
+          while IFS= read -r file; do
+            if [ -f "$file" ]; then
+              VERSION=$(grep -E '__version__\s*=\s*["\x27][0-9]+\.[0-9]+["\x27]' "$file" | sed -E 's/.*["\x27]([0-9]+\.[0-9]+)["\x27].*/\1/' || echo "")
+              if [ -n "$VERSION" ]; then
+                echo "Found version $VERSION in $file"
+                MAJOR=$(echo "$VERSION" | cut -d. -f1)
+                MINOR=$(echo "$VERSION" | cut -d. -f2)
+                TOTAL_MAJOR=$((TOTAL_MAJOR + MAJOR))
+                TOTAL_MINOR=$((TOTAL_MINOR + MINOR))
+              fi
+            fi
+          done < <(find . -name "__init__.py" -not -path "./.git/*" -not -path "./venv/*" -not -path "./.venv/*")
+          
+          echo "Total MAJOR modifications: $TOTAL_MAJOR"
+          echo "Total MINOR modifications: $TOTAL_MINOR"
+          echo "major=$TOTAL_MAJOR" >> $GITHUB_OUTPUT
+          echo "minor=$TOTAL_MINOR" >> $GITHUB_OUTPUT
+
+      - name: Calculate new version
+        if: steps.check_files.outputs.changed == 'true'
+        id: new_version
+        run: |
+          REFERENCE="${{ steps.pyproject_version.outputs.reference }}"
+          MAJOR="${{ steps.init_versions.outputs.major }}"
+          MINOR="${{ steps.init_versions.outputs.minor }}"
+          
+          NEW_VERSION="${REFERENCE}.${MAJOR}.${MINOR}"
+          echo "New version: $NEW_VERSION"
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update pyproject.toml if changed
+        if: steps.check_files.outputs.changed == 'true'
+        id: update_file
+        run: |
+          CURRENT_VERSION="${{ steps.pyproject_version.outputs.current_version }}"
+          NEW_VERSION="${{ steps.new_version.outputs.version }}"
+          
+          if [ "$CURRENT_VERSION" != "$NEW_VERSION" ]; then
+            echo "Updating pyproject.toml from $CURRENT_VERSION to $NEW_VERSION"
+            
+            echo "Current version line in pyproject.toml:"
+            grep -E '^version\s*=' pyproject.toml
+            
+            sed -i -E "s/(^version\s*=\s*\")$CURRENT_VERSION(\")/\1$NEW_VERSION\2/" pyproject.toml
+            
+            echo "Updated version line in pyproject.toml:"
+            grep -E '^version\s*=' pyproject.toml
+            
+            if grep -q "version = \"$NEW_VERSION\"" pyproject.toml || grep -q "version=\"$NEW_VERSION\"" pyproject.toml; then
+              echo "Version successfully updated in pyproject.toml"
+              echo "changed=true" >> $GITHUB_OUTPUT
+            else
+              echo "Error: Failed to update version in pyproject.toml"
+              cat pyproject.toml | grep -A2 -B2 version
+              exit 1
+            fi
+          else
+            echo "Version unchanged: $CURRENT_VERSION"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push version update
+        if: steps.check_files.outputs.changed == 'true' && steps.update_file.outputs.changed == 'true'
+        run: |
+          NEW_VERSION="${{ steps.new_version.outputs.version }}"
+          
+          echo "Git status before commit:"
+          git status
+          
+          echo "Diff:"
+          git diff pyproject.toml
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add pyproject.toml
+          git commit -m "chore: update version to ${NEW_VERSION}"
+          git push
+
+      - name: Check if tag exists
+        if: steps.check_files.outputs.changed == 'true'
+        id: check_tag
+        run: |
+          TAG="v${{ steps.new_version.outputs.version }}"
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists"
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Tag $TAG does not exist"
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.check_files.outputs.changed == 'true' && steps.check_tag.outputs.exists == 'false'
+        run: |
+          TAG="v${{ steps.new_version.outputs.version }}"
+          echo "Creating tag: $TAG"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin "$TAG"
