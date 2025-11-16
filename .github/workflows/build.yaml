@@ -1,10 +1,24 @@
-name: Call PR Workflow
+name: Actions Workflow
 
 on:
-  workflow_call:
+  push:
+    branches:
+      - '**'
+  create:
 
 jobs:
-  call-pr-workflow:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Call versions.yaml workflow
+        uses: ./.github/workflows/versions.yaml
+        with:
+          file: pyproject.toml
+
+  open-pr:
+    if: github.event_name == 'create' && (startsWith(github.ref_name, 'feature') || startsWith(github.ref_name, 'fix') || startsWith(github.ref_name, 'refactor'))
     uses: ./.github/workflows/pr.yaml
     with:
       file: versions.yaml

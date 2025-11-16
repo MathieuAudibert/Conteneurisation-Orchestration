@@ -1,10 +1,10 @@
 name: Create PR to develop on branch creation
 
 on:
-  create:
+  push:
     branches:
       - 'feature/**'
-      - 'hotfix/**'
+      - 'refactor/**'
       - 'fix/**'
 
 permissions:
