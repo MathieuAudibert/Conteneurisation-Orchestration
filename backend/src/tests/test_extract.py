@@ -1,11 +1,10 @@
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-
 import pytest
-from src.etl.extract import extract
 import pandas as pd
+
+from backend.src.etl.extract import extract
 
 def test_extract(tmp_path):
     # crée un fichier csv temporaire
@@ -15,7 +14,6 @@ def test_extract(tmp_path):
         "Mahindra,Thar LX D 4WD MT CONVERTIBLE,Manual,2020,01-01-2021,Diesel,2184,11003,1st owner,1231000,23431,TRUE,No,HR26,2020 Mahindra Thar LX D 4WD MT CONVERTIBLE\n"
         "Hyundai,Verna 1.6 VTVT SX,Manual,2018,01-07-2018,Petrol,1591,66936,1st owner,786000,15359,TRUE,No,DL7C,2018 Hyundai Verna 1.6 VTVT SX"
     )
-
 
     cars = extract(str(test_file))
 
@@ -38,4 +36,4 @@ def test_extract(tmp_path):
         "spare_key",
         "reg_number",
         "title",
-    ]  
+    ]
