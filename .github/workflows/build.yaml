@@ -1,7 +1,7 @@
 name: Call PR Workflow
 
 on:
-  push:
+  workflow_call:
 
 jobs:
   call-pr-workflow:
