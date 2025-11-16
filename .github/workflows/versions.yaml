@@ -18,12 +18,10 @@ jobs:
       - name: Check if relevant files changed
         id: check_files
         run: |
-          # Get list of changed files in the last commit
           CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
           echo "Changed files:"
           echo "$CHANGED_FILES"
           
-          # Check if pyproject.toml or any __init__.py file was modified
           if echo "$CHANGED_FILES" | grep -qE '(pyproject\.toml|__init__\.py)'; then
             echo "Relevant files changed"
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -42,7 +40,6 @@ jobs:
         if: steps.check_files.outputs.changed == 'true'
         id: pyproject_version
         run: |
-          # Try multiple patterns to find the version
           VERSION=$(grep -E '^version\s*=\s*"[^"]+"' pyproject.toml | sed -E 's/^version\s*=\s*"([^"]+)"/\1/')
           
           if [ -z "$VERSION" ]; then
@@ -53,7 +50,6 @@ jobs:
           
           echo "Current pyproject.toml version: $VERSION"
           
-          # Extract the reference number (first number)
           REFERENCE=$(echo "$VERSION" | cut -d. -f1)
           echo "reference=$REFERENCE" >> $GITHUB_OUTPUT
           echo "current_version=$VERSION" >> $GITHUB_OUTPUT
@@ -62,7 +58,6 @@ jobs:
         if: steps.check_files.outputs.changed == 'true'
         id: init_versions
         run: |
-          # Find all __version__ declarations and extract the version numbers
           TOTAL_MAJOR=0
           TOTAL_MINOR=0
           
@@ -70,7 +65,6 @@ jobs:
           
           while IFS= read -r file; do
             if [ -f "$file" ]; then
-              # Try multiple patterns for __version__
               VERSION=$(grep -E '__version__\s*=\s*["\x27][0-9]+\.[0-9]+["\x27]' "$file" | sed -E 's/.*["\x27]([0-9]+\.[0-9]+)["\x27].*/\1/' || echo "")
               if [ -n "$VERSION" ]; then
                 echo "Found version $VERSION in $file"
@@ -95,7 +89,6 @@ jobs:
           MAJOR="${{ steps.init_versions.outputs.major }}"
           MINOR="${{ steps.init_versions.outputs.minor }}"
           
-          # New version format: REFERENCE.MAJOR.MINOR (from __init__.py files)
           NEW_VERSION="${REFERENCE}.${MAJOR}.${MINOR}"
           echo "New version: $NEW_VERSION"
           echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
@@ -110,18 +103,14 @@ jobs:
           if [ "$CURRENT_VERSION" != "$NEW_VERSION" ]; then
             echo "Updating pyproject.toml from $CURRENT_VERSION to $NEW_VERSION"
             
-            # Show the current version line
             echo "Current version line in pyproject.toml:"
             grep -E '^version\s*=' pyproject.toml
             
-            # Use a more robust sed command that handles any whitespace
             sed -i -E "s/(^version\s*=\s*\")$CURRENT_VERSION(\")/\1$NEW_VERSION\2/" pyproject.toml
             
-            # Show the updated version line
             echo "Updated version line in pyproject.toml:"
             grep -E '^version\s*=' pyproject.toml
             
-            # Verify the change was made
             if grep -q "version = \"$NEW_VERSION\"" pyproject.toml || grep -q "version=\"$NEW_VERSION\"" pyproject.toml; then
               echo "Version successfully updated in pyproject.toml"
               echo "changed=true" >> $GITHUB_OUTPUT
@@ -140,7 +129,6 @@ jobs:
         run: |
           NEW_VERSION="${{ steps.new_version.outputs.version }}"
           
-          # Show git status for debugging
           echo "Git status before commit:"
           git status
           
