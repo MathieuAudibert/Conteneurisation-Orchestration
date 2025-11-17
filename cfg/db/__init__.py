@@ -1,4 +1,4 @@
-__version__ = "2.1"
+__version__ = "2.2"
 __description__ = "Package to handle database"
 
 from .classes.connect import ConnectDb
