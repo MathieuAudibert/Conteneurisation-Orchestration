@@ -1,6 +1,6 @@
 certifi==2025.11.12
 charset-normalizer==3.4.4
--e .
+-e git+https://github.com/MathieuAudibert/Conteneurisation-Orchestration.git@97daeb89bf73bc6d45ba38551840cb190cddcce8#egg=Conteneurisation_Orchestration
 dnspython==2.8.0
 dotenv==0.9.9
 idna==3.11
