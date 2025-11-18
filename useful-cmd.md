@@ -14,3 +14,9 @@
 # Update les dependances 
 
 `pip freeze > requirements.txt`
+
+# Lancer un fichier 
+
+`python -m <racine>.<dossier>.<fichier_sans_extension>`
+
+exemple : `python -m backend.src.etl.test`
