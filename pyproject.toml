@@ -14,7 +14,9 @@ requires-python=">=3.10"
 requires=["setuptools", "setuptools-scm"]
 build-backend="setuptools.build_meta"
 
-[tool.setuptools_scm]
-
 [tool.setuptools.packages.find]
 where=["cfg"]
+
+[tool.setuptools.package-dir]
+"cfg.backend"="cfg/backend"
+"cfg.db"="cfg/db"
