@@ -9,3 +9,12 @@ authors=[
 ]
 readme="README.md"
 requires-python=">=3.10"
+
+[build-system]
+requires=["setuptools", "setuptools-scm"]
+build-backend="setuptools.build_meta"
+
+[tool.setuptools_scm]
+
+[tool.setuptools.packages.find]
+where=["cfg"]
