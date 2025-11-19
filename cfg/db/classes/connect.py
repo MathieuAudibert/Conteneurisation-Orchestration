@@ -31,6 +31,22 @@ class ConnectDB:
         except Exception as e:
             print(f"[ERROR]: error while disconnecting to db - {e}")
 
+    def set_adm(self, adm: bool):
+        if not isinstance(adm, bool):
+            raise ValueError("[ERROR]: adm must be bool")
+        if self.adm == adm:
+            return
+        was_connected = self.client is not None
+        if was_connected:
+            try:
+                self.disconnect()
+            except Exception as e:
+                print(f"[ERROR]: error while setting adm : {e}")
+            self.adm = adm
+            self.uri = os.getenv("ADM_MONGO_URI") if adm else os.getenv("MONGO_URI", "")
+            if was_connected:
+                self.connect()
+
 """
 con_adm = ConnectDB(adm=True)
 con_adm.connect()
