@@ -20,3 +20,7 @@
 `python -m <racine>.<dossier>.<fichier_sans_extension>`
 
 exemple : `python -m backend.src.etl.test`
+
+# Lancer un test pytest
+
+`pytest -q <racine>/<folder>/<fichier>.py -q`
