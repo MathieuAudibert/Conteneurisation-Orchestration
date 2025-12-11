@@ -49,3 +49,24 @@ def transform_cars(df: pd.DataFrame, logger: Optional[logging.Logger] = None) ->
         logger.info("Converted engine_capacity(CC) to engine_capacity_cc (%d -> %d non-null)", before, after)
     else:
         df['engine_capacity_cc'] = None
+
+
+
+
+
+def transform_from_file(file_path: str, logger: Optional[logging.Logger] = None) -> pd.DataFrame:
+    logger = logger or get_logger(__name__)
+    logger.info("Transform from file: %s", file_path)
+    cars = extract(file_path)
+    return transform_cars(cars, logger=logger)
+
+if __name__ == "__main__":
+    logger = get_logger(__name__)
+    import os
+    
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(os.path.dirname(current_dir))
+    default_file = os.path.join(project_root, "dataset-cars-dirty.csv")
+    
+    df = transform_from_file(default_file, logger=logger)
+    print(df.head())
