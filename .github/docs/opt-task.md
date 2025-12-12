@@ -2,7 +2,7 @@
 icon: lucide/list-todo
 ---
 
-# Optionnal Tasks
+# :lucide-bookmark-x: Optionnal Tasks
 
 - [ ] SonarQube Integration
 - [ ] Analysis of code quality & vulnerabilities

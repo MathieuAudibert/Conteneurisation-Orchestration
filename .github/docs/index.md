@@ -2,22 +2,23 @@
 icon: lucide/rocket
 ---
 
-# Introduction
+# :lucide-diamond: Introduction
 
-This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu AUDIBERT for a [esilv project](https://www.esilv.fr/).
+This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu AUDIBERT for a [ESILV project](https://www.esilv.fr/).
 
-## Technical stack
+## :lucide-braces: Technical stack
 
-* Python
-* MongoDB
-* Docker
-* K8S
-* Github Actions
-* Zensical
+* Python :simple-python:
+* MongoDB :simple-mongodb:
+* Docker :simple-docker:
+* K8S :simple-kubernetes:
+* Git/GitHub :simple-git:
+* Github Actions :simple-githubactions:
+* Zensical 
 
 ---
 
-## Plan
+## :lucide-drafting-compass: Doc Plan
 
 | Link                                    | Description                          |
 | --------------------------------------- | ------------------------------------ |
@@ -25,11 +26,11 @@ This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu A
 | 2. **[Objectives](./objectives.md)**    | The objectives of this project       |
 | 3. **[Tasks](./tasks.md)**              | Our tasks w/ our current progression |
 | 4. **[Optionnal tasks](./opt-task.md)** | Optionnal tasks w/ our progression   |
-| 5. **[Links](./links.md)**              | All the important links              |
+| 5. **[Links](./link.md)**               | All the important links              |
 
 ---
 
-## Get Started
+## :lucide-arrow-up-right: Get Started
 
 !!! info
     
@@ -43,7 +44,7 @@ git clone https://github.com/MathieuAudibert/Conteneurisation-Orchestration.git
 
 Then, setup your virtual env :
 
-=== "Python & Windows "
+=== "Python :simple-python: / Windows :fontawesome-brands-windows:"
 
     ``` cmd
     python -m venv venv
@@ -51,14 +52,14 @@ Then, setup your virtual env :
     
     ```
 
-=== "Python & MacOS/Linux"
+=== "Python :simple-python: / MacOS :simple-apple:/Linux :simple-linux:"
 
     ``` bash
     python -m venv venv
     source venv/bin/activate
     ```
 
-=== "Uv"
+=== "Uv :simple-uv:"
 
     ``` bash
     uv init 
@@ -66,13 +67,13 @@ Then, setup your virtual env :
 
 Once you've installed and setted your virtual env, you can install the necessary dependancies w/ [pip](https://pypi.org/project/pip/) or [uv](https://docs.astral.sh/uv/).
 
-=== "pip"
+=== "pip :simple-pypi:"
 
     ``` bash
     pip install -r requirements.txt
     ```
 
-=== "uv"
+=== "uv :simple-uv:"
 
     ``` bash
     uv pip install -r requirements.txt 
