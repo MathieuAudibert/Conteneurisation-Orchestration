@@ -49,7 +49,7 @@ nav = [
    { "Objectives" = "objectives.md" },
    {"Tasks" = "tasks.md"}, 
    {"Optionnal Tasks" = "opt-task.md"},
-   {"Links" = "links.md"}
+   {"Links" = "link.md"},
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize
@@ -295,9 +295,9 @@ toggle.name = "Switch to light mode"
 # - https://zensical.org/docs/setup/logo-and-icons
 # - https://zensical.org/docs/authoring/icons-emojis/#search
 # ----------------------------------------------------------------------------
-#[project.theme.icon]
-#logo = "lucide/smile"
-#repo = "lucide/smile"
+[project.theme.icon]
+logo = "lucide/box"
+repo = "lucide/box"
 
 # ----------------------------------------------------------------------------
 # The "extra" section contains miscellaneous settings.

@@ -2,7 +2,7 @@
 icon: lucide/graduation-cap
 ---
 
-# Context
+# :lucide-book-open-text: Context
 
 The objective of this project is to *simulate the complete lifecycle of a modern application*, from its design using microservices to its deployment in production, including automation. 
 
