@@ -1,3 +1,7 @@
+[build-system]
+requires=["setuptools", "setuptools-scm"]
+build-backend="setuptools.build_meta"
+
 [project]
 name="Conteneurisation-Orchestration"
 version="1.5.3"
@@ -9,11 +13,22 @@ authors=[
 ]
 readme="README.md"
 requires-python=">=3.10"
+dependencies = [
+    "pandas",
+    "pymongo",
+    "zensical",
+    "numpy",
+    "python-dotenv"
+]
 
-[build-system]
-requires=["setuptools", "setuptools-scm"]
-build-backend="setuptools.build_meta"
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cfg*"]
+include = ["cfg*", "backend*"]
+
+[tool.pytest.ini_options]
+pythonpath=["."]

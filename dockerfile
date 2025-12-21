@@ -4,9 +4,9 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 RUN groupadd -r orchestration_user && useradd -r -g esilv -m -d /home/orchestration_user orchestration_user
 
 WORKDIR /app
-COPY pyproject.toml requirements.txt ./
+COPY pyproject.toml ./
 
-RUN uv pip install --system -r requirements.txt
+RUN uv pip install --system -e .
 
 COPY . .
 RUN chown -R orchestration_user:orchestration_user /app
