@@ -11,9 +11,13 @@
 
 `deactivate`
 
+# Installer les dependances 
+
+`pip install -e .` et les dependances optionnelles `pip install -e ".["dev"]"`
+
 # Update les dependances 
 
-`pip freeze > requirements.txt`
+rajoutez dans le pyproject.toml la nouvelle dependances dans dependencies
 
 # Lancer un fichier 
 

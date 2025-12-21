@@ -20,7 +20,7 @@ Activate your venv w/ MacOs/Linux
 source venv/bin/activate
 ```
 
-Then, you can install dependancies w/ `pip install -r requirements.txt`
+Then, you can install dependancies w/ `pip install -e .`
 
 You're all set ! 
 
