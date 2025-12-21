@@ -1,6 +1,10 @@
+[build-system]
+requires=["setuptools", "setuptools-scm"]
+build-backend="setuptools.build_meta"
+
 [project]
 name="Conteneurisation-Orchestration"
-version="0.0.0"
+version="1.5.3"
 authors=[
     {name = "AGOSTINO Romeo"}, 
     {name = "BIGAND Theo"}, 
@@ -9,3 +13,22 @@ authors=[
 ]
 readme="README.md"
 requires-python=">=3.10"
+dependencies = [
+    "pandas",
+    "pymongo",
+    "zensical",
+    "numpy",
+    "python-dotenv"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cfg*", "backend*"]
+
+[tool.pytest.ini_options]
+pythonpath=["."]

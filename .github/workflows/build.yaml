@@ -1,8 +1,33 @@
-name: Call PR Workflow
+name: Actions Workflow
 
 on:
   push:
+    branches:
+      - '**'
+  create:
+    branches:
+      - 'feature/**'
+      - 'fix/**'
+      - 'refactor/**'
 
 jobs:
-  call-pr-workflow:
+  update-version:
+    if: github.event_name == 'push'
+    uses: ./.github/workflows/versions.yaml
+    secrets: inherit
+    permissions:
+      contents: write
+
+  open-pr:
+    if: |
+      github.event_name == 'create' && 
+      github.event.ref_type == 'branch' && (
+        startsWith(github.event.ref, 'feature/') ||
+        startsWith(github.event.ref, 'fix/') ||
+        startsWith(github.event.ref, 'refactor/')
+      )
     uses: ./.github/workflows/pr.yaml
+    secrets: inherit
+    permissions:
+      contents: read
+      pull-requests: write
