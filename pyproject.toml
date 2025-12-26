@@ -4,7 +4,7 @@ build-backend="setuptools.build_meta"
 
 [project]
 name="Conteneurisation-Orchestration"
-version="1.5.3"
+version="1.9.5"
 authors=[
     {name = "AGOSTINO Romeo"}, 
     {name = "BIGAND Theo"}, 
@@ -28,7 +28,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cfg*", "backend*"]
+include = ["cfg*", "src*"]
 
 [tool.pytest.ini_options]
 pythonpath=["."]
