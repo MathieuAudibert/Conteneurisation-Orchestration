@@ -6,7 +6,7 @@ RUN groupadd -r orchestration_user && useradd -r -g esilv -m -d /home/orchestrat
 WORKDIR /app
 COPY pyproject.toml ./
 
-RUN uv pip install --system -e .
+RUN uv pip install --no-cache-dire --system -e .
 
 COPY . .
 RUN chown -R orchestration_user:orchestration_user /app
@@ -14,3 +14,6 @@ USER orchestration_user
 
 # TODO: a changer cette commande
 CMD ["python", "backend/src/main.py"]
+
+# Faire une partie DEV & Prod (?)
+# FROM python:3.12-slim AS dev FROM python:3.12-slim AS prod ...

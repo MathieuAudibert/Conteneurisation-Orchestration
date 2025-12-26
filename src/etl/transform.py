@@ -4,8 +4,8 @@ from typing import Optional
 
 import pandas as pd
 
-from log_config import get_logger
-from extract import extract
+from src.etl.log_config import get_logger
+from src.etl.extract import extract
 
 def _to_bool(x):
     if pd.isna(x):
