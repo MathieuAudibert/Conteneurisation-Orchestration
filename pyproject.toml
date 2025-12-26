@@ -28,7 +28,7 @@ dev = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["cfg*", "backend*"]
+include = ["cfg*", "src*"]
 
 [tool.pytest.ini_options]
 pythonpath=["."]
