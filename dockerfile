@@ -12,8 +12,7 @@ COPY . .
 RUN chown -R orchestration_user:orchestration_user /app
 USER orchestration_user
 
-# TODO: a changer cette commande
-CMD ["python", "backend/src/main.py"]
+CMD ["fastapi", "run", "src/main.py"]
 
 # Faire une partie DEV & Prod (?)
 # FROM python:3.12-slim AS dev FROM python:3.12-slim AS prod ...
