@@ -6,7 +6,7 @@ RUN groupadd -r orchestration_user && useradd -r -g esilv -m -d /home/orchestrat
 WORKDIR /app
 COPY pyproject.toml ./
 
-RUN uv pip install --system -e .
+RUN uv pip install --no-cache-dir --system -e .
 
 COPY . .
 RUN chown -R orchestration_user:orchestration_user /app
