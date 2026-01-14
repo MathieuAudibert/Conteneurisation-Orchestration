@@ -3,7 +3,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 LABEL project_name="Conteneurisation-Orchestration"
 
-RUN groupadd -r orchestration_user && useradd -r -g esilv -m -d /home/orchestration_user orchestration_user
+RUN groupadd -r orchestration_user && useradd -r -g orchestration_user -m -d /home/orchestration_user orchestration_user
 
 WORKDIR /app
 COPY pyproject.toml ./
