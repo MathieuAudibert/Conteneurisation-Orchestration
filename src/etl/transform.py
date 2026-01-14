@@ -1,10 +1,8 @@
 import datetime
 import logging
-from typing import Optional
-
 import pandas as pd
-
-from log_config import get_logger
+from typing import Optional
+from src.core.logger import get_logger
 from extract import extract
 
 def _to_bool(x):

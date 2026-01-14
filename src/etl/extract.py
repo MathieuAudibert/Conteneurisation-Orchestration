@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import pandas as pd
-from log_config import get_logger
+from src.core.logger import get_logger
 
 logger = get_logger(__name__)
 
