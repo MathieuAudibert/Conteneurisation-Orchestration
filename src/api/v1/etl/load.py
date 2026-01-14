@@ -6,4 +6,4 @@ router = APIRouter(prefix="/etl", tags=["etl"])
 @router.get("/load")
 def run_load():
     data = extract("cfg/dataset-cars-dirty.csv")
-    return {"status": "success", "message": "Data extracted successfully", "data": data}
+    return {"statusCode": 200, "message": "Data extracted successfully", "data": data}
