@@ -22,5 +22,5 @@ jobs:
 
       - name: Build and push
         run: |
-          docker build -t ghcr.io/mathieuaudibert/Conteneurisation-Orchestration:latest .
-          docker push ghcr.io/mathieuaudibert/Conteneurisation-Orchestration:latest
+          docker build -t ghcr.io/mathieuaudibert/conteneurisation-orchestration:latest .
+          docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration:latest
