@@ -7,8 +7,6 @@ services:
     environment:
       MONGO_USER: ${MONGO_ADM_USER:-changeme}
       MONGO_PASSWD: ${MONGO_ADM_PASSWD:-changeme}
-    volumes:
-      - mongo_data:/data/db
 
   api:
     build: /src
