@@ -10,9 +10,9 @@ services:
     volumes:
       - mongo_data:/data/db
 
-backend:
-  build: /backend
-  container_name: backend
+api:
+  build: /src
+  container_name: api
   ports:
     - "7777:7777"
   environment:
