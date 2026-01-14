@@ -5,20 +5,20 @@ services:
     ports:
       - "27017:27107"
     environment:
-      MONGO_USER: ${MONGO_ADM_USER:changeme}
-      MONGO_PASSWD: ${MONGO_ADM_PASSWD:changeme}
+      MONGO_USER: ${MONGO_ADM_USER:-changeme}
+      MONGO_PASSWD: ${MONGO_ADM_PASSWD:-changeme}
     volumes:
       - mongo_data:/data/db
 
-api:
-  build: /src
-  container_name: api
-  ports:
-    - "7777:7777"
-  environment:
-    MONGO_URI: ${ADM_MONGO_URI}
-  volumes: 
-    - .:/app
-  depends_on:
-    - mongodb
+  api:
+    build: /src
+    container_name: api
+    ports:
+      - "7777:7777"
+    environment:
+      MONGO_URI: ${ADM_MONGO_URI}
+    volumes: 
+      - .:/app
+    depends_on:
+      - mongodb
   
