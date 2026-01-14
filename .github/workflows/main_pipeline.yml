@@ -1,0 +1,22 @@
+name: Main pipeline
+
+on: 
+  push:
+    branches: ["main", "develop", "feature/**"]
+  pull_requests:
+    branches: ["main", "develop", "feature/**"]
+
+
+jobs:
+  build-task:
+    uses: ./github/workflows/build.yml
+    secrets: inherit
+
+  promote-task:
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build-task
+    uses: ./.github/workflows/promote.yml
+    permissions:
+      contents: read
+      packages: write
+    secrets: inherit

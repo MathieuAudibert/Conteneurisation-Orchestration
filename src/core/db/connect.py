@@ -46,13 +46,3 @@ class ConnectDB:
             self.uri = os.getenv("ADM_MONGO_URI") if adm else os.getenv("MONGO_URI", "")
             if was_connected:
                 self.connect()
-
-"""
-con_adm = ConnectDB(adm=True)
-con_adm.connect()
-con_adm.disconnect()
-
-con_ro = ConnectDB(adm=False)
-con_ro.connect()
-con_ro.disconnect()
-"""

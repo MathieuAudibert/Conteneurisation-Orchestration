@@ -18,7 +18,8 @@ dependencies = [
     "pymongo",
     "zensical",
     "numpy",
-    "python-dotenv"
+    "python-dotenv",
+    "fastapi"
 ]
 
 [project.optional-dependencies]

@@ -1,0 +1,26 @@
+name: promote to github artifactory
+
+on:
+  workflow_call:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: GitHub container registry login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        run: |
+          docker build -t ghcr.io/mathieuaudibert/Conteneurisation-Orchestration:latest .
+          docker push ghcr.io/mathieuaudibert/Conteneurisation-Orchestration:latest
