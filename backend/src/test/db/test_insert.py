@@ -1,4 +1,4 @@
-from cfg.db.classes.doctrine import Doctrine
+from src.core.db.doctrine import Doctrine
 
 d = Doctrine()
 pgt = d.insert("cars", [{"brand": "peugeot"}])

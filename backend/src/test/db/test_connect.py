@@ -1,5 +1,5 @@
 import pytest
-from db.classes.connect import ConnectDB
+from backend.src.core.db.connect import ConnectDB
 
 class FakeMongoClient:
     def __init__(self, uri):

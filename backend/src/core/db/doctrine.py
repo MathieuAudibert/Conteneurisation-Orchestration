@@ -1,5 +1,5 @@
 from typing import Any, Dict, Optional
-from src.core.db.connect import ConnectDB
+from backend.src.core.db.connect import ConnectDB
 import pymongo
 
 def _serialize(doc: Dict[str, Any]):

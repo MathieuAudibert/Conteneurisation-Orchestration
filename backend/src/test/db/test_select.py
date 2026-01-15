@@ -1,4 +1,4 @@
-from cfg.db.classes.doctrine import Doctrine
+from src.core.db.doctrine import Doctrine
 
 d = Doctrine()
 all_docs = d.select_all('cars')

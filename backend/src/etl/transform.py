@@ -2,8 +2,8 @@ import datetime
 import logging
 import pandas as pd
 from typing import Optional
-from src.core.logger import get_logger
-from extract import extract
+from backend.src.core.logger import get_logger
+from backend.src.etl.extract import extract
 
 def _to_bool(x):
     if pd.isna(x):

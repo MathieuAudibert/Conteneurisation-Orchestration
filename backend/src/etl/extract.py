@@ -2,9 +2,9 @@ from pathlib import Path
 import os
 import pandas as pd
 from datetime import datetime
-from src.core.logger import get_logger
-from src.core.classes.cars import Cars, TransmissionType, FuelType
-from src.core.classes.logs import Logs
+from backend.src.core.logger import get_logger
+from backend.src.core.classes.cars import Cars, TransmissionType, FuelType
+from backend.src.core.classes.logs import Logs
 
 logger = get_logger(__name__)
 
