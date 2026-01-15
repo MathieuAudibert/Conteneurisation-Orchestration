@@ -6,7 +6,7 @@ LABEL project_name="Conteneurisation-Orchestration"
 RUN groupadd -r orchestration_user && useradd -r -g orchestration_user -m -d /home/orchestration_user orchestration_user
 
 WORKDIR /app
-COPY src/pyproject.toml ./
+COPY backend/src/pyproject.toml ./
 
 RUN uv pip install --no-cache-dir --system -e .
 
