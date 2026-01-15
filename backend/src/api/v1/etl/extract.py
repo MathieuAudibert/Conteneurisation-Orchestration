@@ -1,9 +1,12 @@
 from fastapi import APIRouter
 from backend.src.etl.extract import extract
+from pathlib import Path
 
 router = APIRouter(prefix="/etl", tags=["etl"])
 
 @router.get("/extract")
 def run_extract():
-    data = extract("cfg/dataset-cars-dirty.csv")
+    project_root = Path(__file__).parent.parent.parent.parent.parent.parent
+    csv_path = project_root / "cfg" / "dataset-cars-dirty.csv"
+    data = extract(str(csv_path))
     return {"statusCode": 200, "message": "Data extracted successfully", "data": data}
