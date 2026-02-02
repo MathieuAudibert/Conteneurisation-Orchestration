@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import pandas as pd
 
-router = APIRouter(prefix="/dataset", tags=["dataset"])
+router = APIRouter(prefix="/api/v1/dataset", tags=["dataset"])
 
 @router.get("/")
 def get_router():

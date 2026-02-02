@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from backend.src.etl.extract import extract
 from pathlib import Path
 
-router = APIRouter(prefix="/etl", tags=["etl"])
+router = APIRouter(prefix="/api/v1/etl", tags=["etl"])
 
 @router.get("/extract")
 def run_extract():
