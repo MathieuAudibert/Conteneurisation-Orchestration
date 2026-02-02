@@ -27,6 +27,7 @@ This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu A
 | 3. **[Tasks](./tasks.md)**              | Our tasks w/ our current progression |
 | 4. **[Optionnal tasks](./opt-task.md)** | Optionnal tasks w/ our progression   |
 | 5. **[Links](./link.md)**               | All the important links              |
+| 6. **[Useful commands](./usfl-cmd.md)** | List of useful commands              |
 
 ---
 
@@ -70,13 +71,13 @@ Once you've installed and setted your virtual env, you can install the necessary
 === "pip :simple-pypi:"
 
     ``` bash
-    pip install -r requirements.txt
+    pip install -e .
     ```
 
 === "uv :simple-uv:"
 
     ``` bash
-    uv pip install -r requirements.txt 
+    uv pip install -e .
     ```
 
 You're all done now !

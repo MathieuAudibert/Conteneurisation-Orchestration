@@ -50,6 +50,7 @@ nav = [
    {"Tasks" = "tasks.md"}, 
    {"Optionnal Tasks" = "opt-task.md"},
    {"Links" = "link.md"},
+   {"Useful-cmd" = "usfl-cmd.md"}
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize
