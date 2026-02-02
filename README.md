@@ -3,31 +3,24 @@
 
 This is a project made @ESILV to understand K8S and DevOps.
 
-## Installation
+## Get started
 
-Create your virtual env
-``` python
+Create your virtual env w/ [python](https://www.python.org/downloads/)
+```bash
 python -m venv venv
 ```
 
-Activate your venv w/ Windows
-```
-venv\Scripts\activate
-```
+Then you should activate your venv, install dependencies and your free to go !
 
-Activate your venv w/ MacOs/Linux
-```
-source venv/bin/activate
-```
-
-Then, you can install dependancies w/ `pip install -e .`
-
-You're all set ! 
+>[!NOTE]
+> You should follow the list of usefull commands in [the documentation](./documentation/docs/usfl-cmd.md)
 
 ## Documentation
 
-For now, documentation is available through [Zensical](https://zensical.org/).
+Documentation is available through [Zensical](https://zensical.org/).
 
 To access the doc, you must have completed the steps before. 
 
-Then, you can start the server w/ `zensical serve -a localhost:<PORT>`
+Once the project is running just go to :
+- [localhost:8000/docs](localhost:8000/docs) : for the pretty documentation
+- [localhost:8000/api/v1/swagger](localhost:8000/api/v1/swagger) : for the swagger documentation

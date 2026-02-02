@@ -75,7 +75,6 @@ nav = [
 # Section for configuring theme options
 # ----------------------------------------------------------------------------
 [project.theme]
-
 # change this to "classic" to use the traditional Material for MkDocs look.
 #variant = "classic"
 
@@ -263,11 +262,13 @@ features = [
 # ----------------------------------------------------------------------------
 [[project.theme.palette]]
 scheme = "default"
+primary = "purple"
 toggle.icon = "lucide/sun"
 toggle.name = "Switch to dark mode"
 
 [[project.theme.palette]]
 scheme = "slate"
+primary = "deep purple"
 toggle.icon = "lucide/moon"
 toggle.name = "Switch to light mode"
 

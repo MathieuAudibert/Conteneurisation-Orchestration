@@ -101,7 +101,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="purple" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -159,7 +159,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="purple" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
     
       <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
@@ -169,7 +169,7 @@
     
     
     
-    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
     
       <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
@@ -607,6 +607,75 @@
 
 <h1 id="introduction"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-diamond" viewBox="0 0 24 24"><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0Z"/></svg></span> Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h1>
 <p>This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME &amp; Mathieu AUDIBERT for a <a href="https://www.esilv.fr/">ESILV project</a>.</p>
+<pre class="mermaid"><code>graph TB
+    subgraph "Data Source"
+        A[Kaggle Dataset&lt;br/&gt;Cars India Pre-Owned]
+    end
+
+    subgraph "ETL Pipeline"
+        B[Extract Phase&lt;br/&gt;CSV Data Extraction]
+        C[Transform Phase&lt;br/&gt;Data Cleaning &amp; Enrichment]
+        D[Load Phase&lt;br/&gt;MongoDB Insertion]
+    end
+
+    subgraph "Database"
+        E[(MongoDB&lt;br/&gt;Cars Collection)]
+    end
+
+    subgraph "API Layer"
+        F[FastAPI Backend&lt;br/&gt;Endpoints]
+        F1["/api/v1/etl/extract"]
+        F2["/api/v1/etl/transform"]
+        F3["/api/v1/etl/load"]
+        F4["/api/v1/etl/workflow"]
+    end
+
+    subgraph "Containerization"
+        G[Docker Images&lt;br/&gt;Backend &amp; Frontend]
+        H[Docker Compose&lt;br/&gt;Orchestration]
+    end
+
+    subgraph "CI/CD Pipeline"
+        I[GitHub Actions]
+        J[Build Workflow&lt;br/&gt;Docker Images]
+        K[Promote Workflow&lt;br/&gt;GitHub Artifactory]
+    end
+
+    subgraph "Documentation"
+        L[Zensical Docs&lt;br/&gt;Project Documentation]
+    end
+
+    A --&gt;|CSV File| B
+    B --&gt;|Extracted Data| C
+    C --&gt;|Transformed Data| D
+    D --&gt;|Insert Records| E
+
+    E --&gt;|Query Data| F
+    F --&gt; F1
+    F --&gt; F2
+    F --&gt; F3
+    F --&gt; F4
+
+    F --&gt;|Containerized| G
+    G --&gt;|Defined in| H
+
+    H --&gt;|Deployed via| I
+    I --&gt; J
+    I --&gt; K
+
+    K --&gt;|Registry| G
+
+    L -.-&gt;|Documents| A
+    L -.-&gt;|Documents| B
+    L -.-&gt;|Documents| F
+    L -.-&gt;|Documents| G
+
+    style A fill:#e1f5ff
+    style E fill:#ffe1e1
+    style F fill:#e1ffe1
+    style G fill:#fff4e1
+    style I fill:#f0e1ff
+    style L fill:#ffe1f5</code></pre>
 <h2 id="technical-stack">Technical stack <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-braces" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></svg></span><a class="headerlink" href="#technical-stack" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Python <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.25.18.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/></svg></span></li>

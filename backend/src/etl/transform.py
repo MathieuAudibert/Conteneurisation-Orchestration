@@ -47,6 +47,9 @@ def transform_cars(df: pd.DataFrame, logger: Optional[logging.Logger] = None) ->
         logger.info("Converted engine_capacity(CC) to engine_capacity_cc (%d -> %d non-null)", before, after)
     else:
         df['engine_capacity_cc'] = None
+    
+    logger.info("Transformation complete - final shape: %s", df.shape)
+    return df
 
 def transform_from_file(file_path: str, logger: Optional[logging.Logger] = None) -> pd.DataFrame:
     logger = logger or get_logger(__name__)

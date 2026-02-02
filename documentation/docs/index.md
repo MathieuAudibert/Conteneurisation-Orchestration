@@ -6,6 +6,78 @@ icon: lucide/rocket
 
 This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu AUDIBERT for a [ESILV project](https://www.esilv.fr/).
 
+```mermaid
+graph TB
+    subgraph "Data Source"
+        A[Kaggle Dataset<br/>Cars India Pre-Owned]
+    end
+
+    subgraph "ETL Pipeline"
+        B[Extract Phase<br/>CSV Data Extraction]
+        C[Transform Phase<br/>Data Cleaning & Enrichment]
+        D[Load Phase<br/>MongoDB Insertion]
+    end
+
+    subgraph "Database"
+        E[(MongoDB<br/>Cars Collection)]
+    end
+
+    subgraph "API Layer"
+        F[FastAPI Backend<br/>Endpoints]
+        F1["/api/v1/etl/extract"]
+        F2["/api/v1/etl/transform"]
+        F3["/api/v1/etl/load"]
+        F4["/api/v1/etl/workflow"]
+    end
+
+    subgraph "Containerization"
+        G[Docker Images<br/>Backend & Frontend]
+        H[Docker Compose<br/>Orchestration]
+    end
+
+    subgraph "CI/CD Pipeline"
+        I[GitHub Actions]
+        J[Build Workflow<br/>Docker Images]
+        K[Promote Workflow<br/>GitHub Artifactory]
+    end
+
+    subgraph "Documentation"
+        L[Zensical Docs<br/>Project Documentation]
+    end
+
+    A -->|CSV File| B
+    B -->|Extracted Data| C
+    C -->|Transformed Data| D
+    D -->|Insert Records| E
+    
+    E -->|Query Data| F
+    F --> F1
+    F --> F2
+    F --> F3
+    F --> F4
+    
+    F -->|Containerized| G
+    G -->|Defined in| H
+    
+    H -->|Deployed via| I
+    I --> J
+    I --> K
+    
+    K -->|Registry| G
+    
+    L -.->|Documents| A
+    L -.->|Documents| B
+    L -.->|Documents| F
+    L -.->|Documents| G
+
+    style A fill:#e1f5ff
+    style E fill:#ffe1e1
+    style F fill:#e1ffe1
+    style G fill:#fff4e1
+    style I fill:#f0e1ff
+    style L fill:#ffe1f5
+```
+
 ## Technical stack :lucide-braces:
 
 * Python :simple-python:
