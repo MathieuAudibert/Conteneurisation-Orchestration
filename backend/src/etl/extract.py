@@ -96,6 +96,8 @@ def extract(file_path):
                 cars.append(car)
             
                 log = Logs(
+                    _Logs__created_at=datetime.now(),
+                    _Logs__timestamp=datetime.now(),
                     _user_id=0,
                     _action="car_extracted",
                     _metadata=f"Extracted car: {car.brand} {car.model}"
