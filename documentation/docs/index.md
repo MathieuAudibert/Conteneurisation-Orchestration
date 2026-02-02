@@ -6,7 +6,7 @@ icon: lucide/rocket
 
 This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu AUDIBERT for a [ESILV project](https://www.esilv.fr/).
 
-## :lucide-braces: Technical stack
+## Technical stack :lucide-braces:
 
 * Python :simple-python:
 * MongoDB :simple-mongodb:
@@ -18,7 +18,7 @@ This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu A
 
 ---
 
-## :lucide-drafting-compass: Doc Plan
+## Doc Plan :lucide-drafting-compass:
 
 | Link                                    | Description                          |
 | --------------------------------------- | ------------------------------------ |
@@ -30,7 +30,7 @@ This project was made by Roméo AGOSTINO, Théo BIGAND, Moussa DRAME & Mathieu A
 
 ---
 
-## :lucide-arrow-up-right: Get Started
+## Get Started :lucide-arrow-up-right: 
 
 !!! info
     

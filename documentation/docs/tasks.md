@@ -2,7 +2,7 @@
 icon: lucide/circle-check-big
 ---
 
-# :lucide-bookmark-check: Tasks
+# Tasks :lucide-bookmark-check: 
 
 ## :lucide-folder-heart: Per category
 <div class="grid cards" markdown>

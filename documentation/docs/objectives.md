@@ -2,7 +2,7 @@
 icon: lucide/crosshair
 ---
 
-# :lucide-chart-no-axes-combined: Objectives
+# Objectives :lucide-chart-no-axes-combined:
 
 At the end of this project, you will be able to:
 

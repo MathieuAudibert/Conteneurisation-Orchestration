@@ -2,7 +2,7 @@
 icon: lucide/link
 ---
 
-# :lucide-square-arrow-out-up-right: Links
+# Links :lucide-square-arrow-out-up-right:
 
 <div class="grid cards" markdown>
 
