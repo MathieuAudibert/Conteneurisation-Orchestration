@@ -29,3 +29,5 @@ node_modules
 dist
 dist-ssr
 *.local
+
+mongo-data

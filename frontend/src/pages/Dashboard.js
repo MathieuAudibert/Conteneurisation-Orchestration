@@ -7,7 +7,7 @@ import {
   Activity,
   RefreshCw
 } from 'lucide-react';
-import { carService, logService } from '../services/api';
+import { carService, logService, etlService } from '../services/api';
 
 const Dashboard = () => {
   const [stats, setStats] = useState({
@@ -16,6 +16,7 @@ const Dashboard = () => {
     avgPrice: 0,
   });
   const [loading, setLoading] = useState(true);
+  const [etlLoading, setEtlLoading] = useState(false);
   const [recentCars, setRecentCars] = useState([]);
 
   const fetchDashboardData = async () => {
@@ -50,6 +51,21 @@ const Dashboard = () => {
   useEffect(() => {
     fetchDashboardData();
   }, []);
+
+  const runETL = async () => {
+    setEtlLoading(true);
+    try {
+      const response = await etlService.runWorkflow();
+      console.log('ETL completed:', response);
+      alert('ETL pipeline completed successfully! Refreshing data...');
+      await fetchDashboardData();
+    } catch (error) {
+      console.error('Error running ETL:', error);
+      alert('Error running ETL pipeline. Check console for details.');
+    } finally {
+      setEtlLoading(false);
+    }
+  };
 
   const statCards = [
     {
@@ -105,13 +121,13 @@ const Dashboard = () => {
           </p>
         </div>
         <div className="header-actions">
-          <button className="btn btn-glass" onClick={fetchDashboardData}>
+          <button className="btn btn-glass" onClick={fetchDashboardData} disabled={loading}>
             <RefreshCw size={20} />
             Refresh
           </button>
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={runETL} disabled={etlLoading}>
             <Activity size={20} />
-            Run ETL
+            {etlLoading ? 'Running...' : 'Run ETL'}
           </button>
         </div>
       </div>

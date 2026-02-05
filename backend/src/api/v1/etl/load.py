@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from backend.src.etl.transform import transform_from_file
 from backend.src.core.db.doctrine import Doctrine
 from backend.src.core.logger import get_logger
+from pathlib import Path
 
 router = APIRouter(prefix="/api/v1/etl", tags=["etl"])
 logger = get_logger(__name__)
@@ -9,7 +10,9 @@ logger = get_logger(__name__)
 @router.get("/load")
 def run_load():
     try:
-        df = transform_from_file("cfg/dataset-cars-dirty.csv", logger=logger)
+        project_root = Path(__file__).parent.parent.parent.parent.parent.parent
+        csv_path = project_root / "cfg" / "dataset-cars-dirty.csv"
+        df = transform_from_file(str(csv_path), logger=logger)
         data = df.to_dict(orient='records')
         
         doctrine = Doctrine()
