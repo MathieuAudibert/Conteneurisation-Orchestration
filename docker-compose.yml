@@ -3,26 +3,44 @@ services:
     image: mongo:6.0
     container_name: mongo
     ports:
-      - "27017:27107"
+      - "27017:27017"
     environment:
-      MONGO_USER: ${MONGO_ADM_USER:-changeme}
-      MONGO_PASSWD: ${MONGO_ADM_PASSWD:-changeme}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ADM_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ADM_PASSWD}
+    volumes:
+      - mongo-data:/data/db
 
   backend:
-    build: /backend
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
     container_name: backend
     ports:
       - "8000:8000"
     environment:
-      MONGO_URI: ${ADM_MONGO_URI}
+      MONGO_URI: ${MONGO_URI}
+      ADM_MONGO_URI: ${ADM_MONGO_URI}
     volumes: 
       - .:/app
     depends_on:
       - mongodb
 
+  documentation:
+    build:
+      context: .
+      dockerfile: documentation/Dockerfile
+    container_name: documentation
+    ports:
+      - "7777:7777"
+
   frontend:
-    build: /frontend
+    build: ./frontend
     container_name: frontend
     ports:
-      - ":"
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
   

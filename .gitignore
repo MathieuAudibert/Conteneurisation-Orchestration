@@ -24,3 +24,10 @@ dist-ssr
 **/venv
 
 **/*.egg-info
+
+node_modules
+dist
+dist-ssr
+*.local
+
+mongo-data
