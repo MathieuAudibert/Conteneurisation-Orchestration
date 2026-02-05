@@ -16,7 +16,8 @@ jobs:
       - name: Build Backend Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: .
+          file: ./backend/Dockerfile
           push: false
           tags: conteneurisation-orchestration-backend:latest
 
@@ -45,9 +46,10 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build Frontend Docker image
+      - name: Build Documentation Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./documentation
+          context: .
+          file: ./documentation/Dockerfile
           push: false
           tags: conteneurisation-orchestration-documentation:latest

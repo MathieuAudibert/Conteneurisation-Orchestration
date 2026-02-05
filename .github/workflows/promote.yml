@@ -22,7 +22,7 @@ jobs:
 
       - name: Build and push backend
         run: |
-          docker build -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-backend:latest ./backend
+          docker build -f backend/Dockerfile -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-backend:latest .
           docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-backend:latest
 
   publish-frontend:
@@ -64,5 +64,5 @@ jobs:
 
       - name: Build and push documentation
         run: |
-          docker build -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest ./documentation
+          docker build -f documentation/Dockerfile -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest .
           docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest
