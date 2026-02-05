@@ -70,5 +70,6 @@ compose:
 	docker compose down -v 
 	docker compose up
 
-complete: dotenv python-setup npm-setup k8s-setup compose
+complete: python-setup npm-setup k8s-setup compose
 	@echo "Running complete project"
+	@echo "You might wanna run the 'make dotenv' command and fill its values before running this."
