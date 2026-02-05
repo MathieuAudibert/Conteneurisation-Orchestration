@@ -1,4 +1,4 @@
-.PHONY: help dotenv python-setup npm-setup k8s-setup compose
+.PHONY: help dotenv python-setup npm-setup k8s-setup compose complete
 
 VERSION := 1.4.2
 VENV	:= venv
