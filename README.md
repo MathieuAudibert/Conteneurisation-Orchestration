@@ -1,19 +1,25 @@
 # Conteneurisation-Orchestration
 ## Context
 
-This is a project made @ESILV to understand K8S and DevOps.
+This is a project made @ESILV to understand **K8S** and **DevOps**.
 
 ## Get started
 
-Create your virtual env w/ [python](https://www.python.org/downloads/)
-```bash
-python -m venv venv
+If you're on Windows, we encourage you to install [Make](https://www.gnu.org/software/make/)
+You can install it with : 
+```pwsh
+choco install make
 ```
 
-Then you should activate your venv, install dependencies and your free to go !
+You can also follow every steps of the [`complete`](./Makefile) command *if you don't want to install/use `Make`*
 
 >[!NOTE]
-> You should follow the list of usefull commands in [the documentation](./documentation/docs/usfl-cmd.md)
+> The list of usefull commands in [the documentation](./documentation/docs/usfl-cmd.md) might help you :)
+
+Otherwise, using `Make` is simple
+```bash
+make help
+```
 
 ## Documentation
 
@@ -22,5 +28,5 @@ Documentation is available through [Zensical](https://zensical.org/).
 To access the doc, you must have completed the steps before. 
 
 Once the project is running just go to :
-- [localhost:8000/docs](localhost:8000/docs) : for the pretty documentation
-- [localhost:8000/api/v1/swagger](localhost:8000/api/v1/swagger) : for the swagger documentation
+- [localhost:8000/docs](http://localhost:8000/docs) : for the pretty documentation
+- [localhost:8000/api/v1/swagger](http://localhost:8000/api/v1/swagger) : for the swagger documentation
