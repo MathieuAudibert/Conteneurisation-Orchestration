@@ -16,9 +16,9 @@ You can also follow every steps of the [`complete`](./Makefile) command *if you 
 >[!NOTE]
 > The list of usefull commands in [the documentation](./documentation/docs/usfl-cmd.md) might help you :)
 
-Otherwise, using `Make` is simple
+Otherwise, just run this command for the complete workflow and setup :
 ```bash
-make help
+make complete
 ```
 
 ## Documentation
