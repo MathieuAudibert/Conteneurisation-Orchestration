@@ -66,3 +66,50 @@ jobs:
         run: |
           docker build -f documentation/Dockerfile -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest .
           docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest
+
+  deploy-to-k8s:
+    runs-on: ubuntu-latest
+    needs: [publish-backend, publish-frontend, publish-documentation]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure kubectl
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG }}
+
+      - name: Create secrets from environment
+        run: |
+          kubectl create secret generic mongodb-secret \
+            --from-literal=username=${{ secrets.MONGO_ADM_USER }} \
+            --from-literal=password=${{ secrets.MONGO_ADM_PASSWD }} \
+            --from-literal=admin-uri=${{ secrets.ADM_MONGO_URI }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Deploy MongoDB
+        run: kubectl apply -f k8s/mongoDB.yml
+
+      - name: Deploy Backend
+        run: |
+          kubectl apply -f k8s/backend.yml
+          kubectl rollout restart deployment/backend
+          kubectl rollout status deployment/backend --timeout=5m
+
+      - name: Deploy Frontend
+        run: |
+          kubectl apply -f k8s/frontend.yml
+          kubectl rollout restart deployment/frontend
+          kubectl rollout status deployment/frontend --timeout=5m
+
+      - name: Deploy Documentation
+        run: |
+          kubectl apply -f k8s/documentation.yml
+          kubectl rollout restart deployment/documentation
+          kubectl rollout status deployment/documentation --timeout=5m
+
+      - name: Verify deployment
+        run: |
+          kubectl get pods
+          kubectl get services
