@@ -20,16 +20,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push all images
+      - name: Build and push single combined image
         run: |
-          docker build -f backend/Dockerfile -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-backend:latest .
-          docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-backend:latest
-          
-          docker build -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-frontend:latest ./frontend
-          docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-frontend:latest
-          
-          docker build -f documentation/Dockerfile -t ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest .
-          docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration-documentation:latest
+          docker build -t ghcr.io/mathieuaudibert/conteneurisation-orchestration:latest .
+          docker push ghcr.io/mathieuaudibert/conteneurisation-orchestration:latest
 
   deploy-to-k8s:
     runs-on: ubuntu-latest
