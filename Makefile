@@ -27,6 +27,7 @@ help:
 	@echo "$(GREEN)dotenv$(RESET): remove and creates dotenv with values"
 	@echo "$(GREEN)python-setup$(RESET): clean, creates venv, upgrade pip and install dependencies"
 	@echo "$(GREEN)npm-setup$(RESET): install npm dependencies"
+	@echo "$(GREEN)minikube$(RESET): install minikube if not installed"
 	@echo "$(GREEN)k8s-setup$(RESET): setup k8s, kind..."
 	@echo "$(GREEN)compose$(RESET): remove builds and then compose again"
 	@echo "$(GREEN)complete$(RESET): complete setup"
