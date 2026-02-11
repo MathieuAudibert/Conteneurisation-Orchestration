@@ -8,7 +8,7 @@ router = APIRouter(prefix="/api/v1/etl", tags=["etl"])
 logger = get_logger(__name__)
 
 @router.get("/load")
-def run_load():
+def run_load():# -> dict[str, Any]:
     try:
         project_root = Path(__file__).parent.parent.parent.parent.parent.parent
         csv_path = project_root / "cfg" / "dataset-cars-dirty.csv"
