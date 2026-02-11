@@ -2,21 +2,21 @@ import pytest
 from backend.src.core.db.connect import ConnectDB
 
 class FakeMongoClient:
-    def __init__(self, uri):
+    def __init__(self, uri) -> None:
         self.uri = uri
         self.closed = False
 
-    def __getitem__(self, name):
+    def __getitem__(self, name):# -> dict[str, Any]:
         return {"_fake_db_name": name}
 
     def close(self):
         self.closed = True
 
 class FakeBadMongoClient: 
-    def __init__(self, uri):
+    def __init__(self, uri) -> None:
         raise RuntimeError("caca")
 
-def test_connect_read_only_success(monkeypatch, capsys):
+def test_connect_read_only_success(monkeypatch, capsys) -> None:
     monkeypatch.setattr("cfg.db.classes.connect.MongoClient", FakeMongoClient)
     monkeypatch.setenv("MONGO_URI", "mongodb://localhost:27017")
 
@@ -33,7 +33,7 @@ def test_connect_read_only_success(monkeypatch, capsys):
     assert "[INFO]: disconnected successfully" in captured.out
 
 
-def test_connect_admin_success(monkeypatch, capsys):
+def test_connect_admin_success(monkeypatch, capsys) -> None:
     monkeypatch.setattr("cfg.db.classes.connect.MongoClient", FakeMongoClient)
     monkeypatch.setenv("ADM_MONGO_URI", "mongodb://admin:27017")
 
@@ -48,7 +48,7 @@ def test_connect_admin_success(monkeypatch, capsys):
     assert con.client.closed is True
 
 
-def test_connect_raises_exception(monkeypatch, capsys):
+def test_connect_raises_exception(monkeypatch, capsys) -> None:
     monkeypatch.setattr("cfg.db.classes.connect.MongoClient", FakeBadMongoClient)
     monkeypatch.setenv("MONGO_URI", "mongodb://localhost:27017")
     con = ConnectDB(adm=False)
