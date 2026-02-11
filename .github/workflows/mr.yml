@@ -1,0 +1,26 @@
+name: call copilot on merge requests
+
+on:
+  workflow_call:
+
+jobs:
+  copilot-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: GitHub Copilot Code Review
+        uses: github/copilot-codereviewer@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          review-level: 'detailed'
+          include-files: '**/*.py,**/*.js,**/*.ts,**/*.jsx,**/*.tsx,**/*.yml,**/*.yaml,**/*.json,**/*.md'
+          exclude-files: '**/node_modules/**,**/dist/**,**/__pycache__/**,**/build/**'
+          enable-suggestions: true 
