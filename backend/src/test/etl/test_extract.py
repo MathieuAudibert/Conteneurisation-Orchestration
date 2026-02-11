@@ -2,7 +2,7 @@ import pytest
 from src.etl.extract import extract
 import pandas as pd
 
-def test_extract(tmp_path):
+def test_extract(tmp_path) -> None:
     # crée un fichier csv temporaire
     test_file = tmp_path / "test_data.csv"
     test_file.write_text(
