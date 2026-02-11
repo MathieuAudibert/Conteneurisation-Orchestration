@@ -5,22 +5,19 @@ on:
 
 jobs:
   copilot-review:
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
-      issues: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: GitHub Copilot Code Review
-        uses: github/copilot-codereviewer@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          review-level: 'detailed'
-          include-files: '**/*.py,**/*.js,**/*.ts,**/*.jsx,**/*.tsx,**/*.yml,**/*.yaml,**/*.json,**/*.md'
-          exclude-files: '**/node_modules/**,**/dist/**,**/__pycache__/**,**/build/**'
-          enable-suggestions: true 
+      - name: Request Copilot Code Review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}/requested_reviewers \
+            -f "reviewers[]=Copilot" 
