@@ -8,7 +8,7 @@ from backend.src.core.classes.logs import Logs
 
 logger = get_logger(__name__)
 
-def _resolve_path(file_path):
+def _resolve_path(file_path):# -> Path | Any:
     p = Path(file_path)
     if p.is_absolute():
         return p
@@ -25,7 +25,7 @@ def _resolve_path(file_path):
     else:
         return (project_root / "cfg" / fp).resolve()
 
-def _parse_ownership(value):
+def _parse_ownership(value) -> int:
     if pd.isna(value):
         return 0
     if isinstance(value, int):
@@ -41,7 +41,7 @@ def _parse_ownership(value):
         return 4
     return int(value) if value else 0
 
-def _parse_fuel_type(value):
+def _parse_fuel_type(value) -> FuelType:
     if pd.isna(value) or str(value).upper() in ['NAN', 'CNG']:
         return FuelType.PETROL 
     try:
@@ -50,7 +50,7 @@ def _parse_fuel_type(value):
         logger.warning(f"Unknown fuel type '{value}', defaulting to PETROL")
         return FuelType.PETROL
 
-def extract(file_path):
+def extract(file_path):# -> list[Any]:
     logger.info(f"[INFO]: Début de l'extraction des données depuis {file_path}")
     try:
         path = _resolve_path(file_path)

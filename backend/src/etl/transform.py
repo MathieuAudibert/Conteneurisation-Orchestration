@@ -5,7 +5,7 @@ from typing import Optional
 from backend.src.core.logger import get_logger
 from backend.src.etl.extract import extract
 
-def _to_bool(x):
+def _to_bool(x) -> bool:
     if pd.isna(x):
         return False
     if isinstance(x, bool):
@@ -13,7 +13,7 @@ def _to_bool(x):
     s = str(x).strip().lower()
     return s in {"true", "t", "yes", "y", "1"}
 
-def _to_int_safe(x):
+def _to_int_safe(x) -> None | int:
     if pd.isna(x):
         return None
     try:
