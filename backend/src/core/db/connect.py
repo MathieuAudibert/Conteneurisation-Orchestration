@@ -4,14 +4,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class ConnectDB:
-    def __init__(self, adm: bool):
+    def __init__(self, adm: bool) -> None:
         self.uri = os.getenv("ADM_MONGO_URI") if adm else os.getenv("MONGO_URI", "")
         self.db_name = "Cars" 
         self.client = None
         self.db = None
         self.adm = adm
 
-    def connect(self):
+    def connect(self) -> None:
         try:
             if self.adm == True:
                 self.client = MongoClient(self.uri)
@@ -24,14 +24,14 @@ class ConnectDB:
         except Exception as e:
             print(f"[ERROR]: error while connecting to db - {e}")
     
-    def disconnect(self):
+    def disconnect(self) -> None:
         try:
             self.client.close()
             print("[INFO]: disconnected successfully")
         except Exception as e:
             print(f"[ERROR]: error while disconnecting to db - {e}")
 
-    def set_adm(self, adm: bool):
+    def set_adm(self, adm: bool) -> None:
         if not isinstance(adm, bool):
             raise ValueError("[ERROR]: adm must be bool")
         if self.adm == adm:

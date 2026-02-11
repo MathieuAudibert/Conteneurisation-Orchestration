@@ -2,12 +2,12 @@ from typing import Any, Dict, Optional
 from backend.src.core.db.connect import ConnectDB
 import pymongo
 
-def _serialize(doc: Dict[str, Any]):
+def _serialize(doc: Dict[str, Any]) -> Dict[str, Any]:
     # a implementer si j'ai pas la flm
     return doc
 
 class Doctrine:
-    def __init__(self):
+    def __init__(self) -> None:
         self.conn = ConnectDB(False)
         self.conn.connect()
 
@@ -16,7 +16,7 @@ class Doctrine:
             raise RuntimeError("[ERROR]: not connected to db")
         return self.conn.db[collection_name]
 
-    def select_all(self, collection_name: str):
+    def select_all(self, collection_name: str):# -> list[Dict[str, Any]] | list[Any]:
         try:
             collection = self._get_collection(collection_name)
             data = list(collection.find({}))
@@ -25,7 +25,7 @@ class Doctrine:
             print(f"[ERROR] Doctrine.select_all - {e}")
             return []
 
-    def select_list(self, collection_name: str, filter: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None):
+    def select_list(self, collection_name: str, filter: Optional[Dict[str, Any]] = None, projection: Optional[Dict[str, Any]] = None):# -> list[Dict[str, Any]] | list[Any]:
         # projection = champs a select
         try:
             coll = self._get_collection(collection_name)
@@ -36,7 +36,7 @@ class Doctrine:
             print(f"[ERROR] Doctrine.select_list - {e}")
             return []
 
-    def insert(self, collection_name: str, args: Dict[str, Any]=None):
+    def insert(self, collection_name: str, args: Dict[str, Any]=None):# -> Any | None:
         self.conn.set_adm(True)
         try:
             if args is None:
@@ -61,7 +61,7 @@ class Doctrine:
             except Exception as e2:
                 print(f"[ERROR]: cant disable adm mode - {e2}")
 
-    def update(self, collection_name: str, filter: Optional[Dict[str, Any]], update: Optional[Dict[str, Any]], many: bool=False):
+    def update(self, collection_name: str, filter: Optional[Dict[str, Any]], update: Optional[Dict[str, Any]], many: bool=False):# -> Any | Literal[0]:
         try:
             self.conn.set_adm(True)
             if update is None:
@@ -86,7 +86,7 @@ class Doctrine:
             except Exception as e2:
                 print(f"[ERROR]: error while unseting adm - {e2}")
 
-    def delete(self, collection_name: str, filter: Optional[Dict[str, Any]], many: bool=False):
+    def delete(self, collection_name: str, filter: Optional[Dict[str, Any]], many: bool=False):# -> Any | Literal[0]:
         try:
             self.conn.set_adm(True)
             coll = self._get_collection(collection_name)
