@@ -9,7 +9,7 @@ class Logs:
     _action: str
     _metadata: str
     
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.created_at = self.__created_at
         self.timestamp = self.__timestamp
         self.user_id = self._user_id
@@ -19,31 +19,31 @@ class Logs:
     # en gros : si user_id.type = str --> ERREUR
 
     @property
-    def user_id(self):
+    def user_id(self) -> int:
         return self._user_id
     
     @property
-    def action(self):
+    def action(self) -> str:
         return self._action
 
     @property
-    def metadata(self):
+    def metadata(self) -> str:
         return self._metadata
     
     @user_id.setter
-    def user_id(self, value:int):
+    def user_id(self, value:int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: user_id must be int")
         self._user_id = value
     
     @action.setter
-    def action(self, value: str):
+    def action(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: action must be str")
         self._action = value
     
     @metadata.setter
-    def metadata(self, value: str):
+    def metadata(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: metadata must be str")
         self._metadata = value

@@ -43,7 +43,7 @@ class Cars:
     _well_maintened: bool
     _economy_score: float
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         self.created_at = self.__created_at
         self.brand = self._brand
         self.model = self._model
@@ -78,281 +78,281 @@ class Cars:
     # en gros : si brand.type = int --> ERREUR 
 
     @property
-    def brand(self):
+    def brand(self) -> str:
         return self._brand
 
     @property
-    def model(self):
+    def model(self) -> str:
         return self._model
 
     @property
-    def full_model_name(self):
+    def full_model_name(self) -> str:
         return self._full_model_name
 
     @property
-    def transmission(self):
+    def transmission(self) -> TransmissionType:
         return self._transmission
 
     @property
-    def fuel_type(self):
+    def fuel_type(self) -> FuelType:
         return self._fuel_type
 
     @property
-    def make_year(self):
+    def make_year(self) -> str:
         return self._make_year
 
     @property
-    def reg_year(self):
+    def reg_year(self) -> str:
         return self._reg_year
 
     @property
-    def engine_capacity_cc(self):
+    def engine_capacity_cc(self) -> int:
         return self._engine_capacity_cc
 
     @property
-    def engine_category(self):
+    def engine_category(self) -> str:
         return self._engine_category
 
     @property
-    def km_driven(self):
+    def km_driven(self) -> int:
         return self._km_driven
 
     @property
-    def usage_category(self):
+    def usage_category(self) -> str:
         return self._usage_category
 
     @property
-    def ownership(self):
+    def ownership(self) -> int:
         return self._ownership
 
     @property
-    def ownership_category(self):
+    def ownership_category(self) -> str:
         return self._ownership_category
 
     @property
-    def price(self):
+    def price(self) -> int:
         return self._price
 
     @property
-    def overall_cost(self):
+    def overall_cost(self) -> int:
         return self._overall_cost
 
     @property
-    def total_value(self):
+    def total_value(self) -> int:
         return self._total_value
 
     @property
-    def price_category(self):
+    def price_category(self) -> str:
         return self._price_category
 
     @property
-    def has_insurance(self):
+    def has_insurance(self) -> bool:
         return self._has_insurance
 
     @property
-    def spare_key(self):
+    def spare_key(self) -> bool:
         return self._spare_key
 
     @property
-    def ready_for_sale(self):
+    def ready_for_sale(self) -> bool:
         return self._ready_for_sale
 
     @property
-    def reg_number(self):
+    def reg_number(self) -> str:
         return self._reg_number
 
     @property
-    def title(self):
+    def title(self) -> str:
         return self._title
 
     @property
-    def age_of_car(self):
+    def age_of_car(self) -> int:
         return self._age_of_car
 
     @property
-    def usage_efficency(self):
+    def usage_efficency(self) -> int:
         return self._usage_efficency
 
     @property
-    def is_old_car(self):
+    def is_old_car(self) -> bool:
         return self._is_old_car
 
     @property
-    def is_expensive(self):
+    def is_expensive(self) -> bool:
         return self._is_expensive
 
     @property
-    def well_maintened(self):
+    def well_maintened(self) -> bool:
         return self._well_maintened
 
     @property
-    def economy_score(self):
+    def economy_score(self) -> float:
         return self._economy_score
     
     @brand.setter
-    def brand(self, value: str):
+    def brand(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: brand must be str")
         self._brand = value
 
     @model.setter
-    def model(self, value: str):
+    def model(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: model must be str")
         self._model = value
 
     @full_model_name.setter
-    def full_model_name(self, value: str):
+    def full_model_name(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: full_model_name must be str")
         self._full_model_name = value
 
     @transmission.setter
-    def transmission(self, value: TransmissionType):
+    def transmission(self, value: TransmissionType) -> None:
         if not isinstance(value, TransmissionType):
             raise TypeError("[ERROR]: transmission must be TransmissionType")
         self._transmission = value
 
     @fuel_type.setter
-    def fuel_type(self, value: FuelType):
+    def fuel_type(self, value: FuelType) -> None:
         if not isinstance(value, FuelType):
             raise TypeError("[ERROR]: fuel_type must be FuelType")
         self._fuel_type = value
 
     @make_year.setter
-    def make_year(self, value: str):
+    def make_year(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: make_year must be str")
         self._make_year = value
 
     @reg_year.setter
-    def reg_year(self, value: str):
+    def reg_year(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: reg_year must be str")
         self._reg_year = value
 
     @engine_capacity_cc.setter
-    def engine_capacity_cc(self, value: int):
+    def engine_capacity_cc(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: engine_capacity_cc must be int")
         self._engine_capacity_cc = value
 
     @engine_category.setter
-    def engine_category(self, value: str):
+    def engine_category(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: engine_category must be str")
         self._engine_category = value
 
     @km_driven.setter
-    def km_driven(self, value: int):
+    def km_driven(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: km_driven must be int")
         self._km_driven = value
 
     @usage_category.setter
-    def usage_category(self, value: str):
+    def usage_category(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: usage_category must be str")
         self._usage_category = value
 
     @ownership.setter
-    def ownership(self, value: int):
+    def ownership(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: ownership must be int")
         self._ownership = value
 
     @ownership_category.setter
-    def ownership_category(self, value: str):
+    def ownership_category(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: ownership_category must be str")
         self._ownership_category = value
 
     @price.setter
-    def price(self, value: int):
+    def price(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: price must be int")
         self._price = value
 
     @overall_cost.setter
-    def overall_cost(self, value: int):
+    def overall_cost(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: overall_cost must be int")
         self._overall_cost = value
 
     @total_value.setter
-    def total_value(self, value: int):
+    def total_value(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: total_value must be int")
         self._total_value = value
 
     @price_category.setter
-    def price_category(self, value: str):
+    def price_category(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: price_category must be str")
         self._price_category = value
 
     @has_insurance.setter
-    def has_insurance(self, value: bool):
+    def has_insurance(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: has_insurance must be bool")
         self._has_insurance = value
 
     @spare_key.setter
-    def spare_key(self, value: bool):
+    def spare_key(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: spare_key must be bool")
         self._spare_key = value
 
     @ready_for_sale.setter
-    def ready_for_sale(self, value: bool):
+    def ready_for_sale(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: ready_for_sale must be bool")
         self._ready_for_sale = value
 
     @reg_number.setter
-    def reg_number(self, value: str):
+    def reg_number(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: reg_number must be str")
         self._reg_number = value
 
     @title.setter
-    def title(self, value: str):
+    def title(self, value: str) -> None:
         if not isinstance(value, str):
             raise TypeError("[ERROR]: title must be str")
         self._title = value
 
     @age_of_car.setter
-    def age_of_car(self, value: int):
+    def age_of_car(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: age_of_car must be int")
         self._age_of_car = value
 
     @usage_efficency.setter
-    def usage_efficency(self, value: int):
+    def usage_efficency(self, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("[ERROR]: usage_efficency must be int")
         self._usage_efficency = value
 
     @is_old_car.setter
-    def is_old_car(self, value: bool):
+    def is_old_car(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: is_old_car must be bool")
         self._is_old_car = value
 
     @is_expensive.setter
-    def is_expensive(self, value: bool):
+    def is_expensive(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: is_expensive must be bool")
         self._is_expensive = value
 
     @well_maintened.setter
-    def well_maintened(self, value: bool):
+    def well_maintened(self, value: bool) -> None:
         if not isinstance(value, bool):
             raise TypeError("[ERROR]: well_maintened must be bool")
         self._well_maintened = value
 
     @economy_score.setter
-    def economy_score(self, value: float):
+    def economy_score(self, value: float) -> None:
         if not isinstance(value, float):
             raise TypeError("[ERROR]: economy_score must be float")
         self._economy_score = value
