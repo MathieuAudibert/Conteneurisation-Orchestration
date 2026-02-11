@@ -7,6 +7,15 @@ on:
     branches: ["main", "develop", "feature/**"]
 
 jobs:
+  copilot-review:
+    if: github.event_name == 'pull_request'
+    uses: ./.github/workflows/mr.yml
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    secrets: inherit
+
   build-task:
     uses: ./.github/workflows/build.yml
     secrets: inherit
