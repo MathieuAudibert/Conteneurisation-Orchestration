@@ -1,3 +1,4 @@
+from typing import Any
 from fastapi import APIRouter
 from backend.src.etl.extract import extract
 from backend.src.etl.transform import transform_cars
@@ -10,7 +11,7 @@ router = APIRouter(prefix="/api/v1/etl", tags=["etl"])
 logger = get_logger(__name__)
 
 @router.get("/workflow")
-def run_workflow():
+def run_workflow() -> dict[str, Any]:
     try:
         logger.info("Starting ETL workflow - Extract phase")
         project_root = Path(__file__).parent.parent.parent.parent.parent.parent

@@ -1,3 +1,4 @@
+from typing import Any
 from fastapi import APIRouter
 from backend.src.etl.transform import transform_from_file
 from backend.src.core.logger import get_logger
@@ -7,7 +8,7 @@ router = APIRouter(prefix="/api/v1/etl", tags=["etl"])
 logger = get_logger(__name__)
 
 @router.get("/transform")
-def run_transform():
+def run_transform() -> dict[str, Any]:
     try:
         project_root = Path(__file__).parent.parent.parent.parent.parent.parent
         csv_path = project_root / "cfg" / "dataset-cars-dirty.csv"

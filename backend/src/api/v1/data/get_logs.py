@@ -1,10 +1,11 @@
+from typing import Any
 from fastapi import APIRouter, HTTPException
 from backend.src.core.db.doctrine import Doctrine
 
 router = APIRouter(prefix="/api/v1/data", tags=["data"])
 
 @router.get("/logs")
-def get_all_logs():
+def get_all_logs() -> dict[str, Any]:
     """Get all logs from MongoDB"""
     try:
         doctrine = Doctrine()
@@ -21,7 +22,7 @@ def get_all_logs():
         raise HTTPException(status_code=500, detail=f"Error fetching logs: {str(e)}")
 
 @router.get("/logs/recent")
-def get_recent_logs(limit: int = 10):
+def get_recent_logs(limit: int = 10) -> dict[str, Any]:
     try:
         doctrine = Doctrine()
         logs = doctrine.select_all("logs")
