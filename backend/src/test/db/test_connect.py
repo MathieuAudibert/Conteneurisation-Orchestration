@@ -1,20 +1,21 @@
+from typing import Any
 import pytest
 from backend.src.core.db.connect import ConnectDB
 
 class FakeMongoClient:
-    def __init__(self, uri) -> None:
+    def __init__(self, uri: str) -> None:
         self.uri = uri
         self.closed = False
 
-    def __getitem__(self, name):# -> dict[str, Any]:
+    def __getitem__(self, name: str) -> dict[str, Any]:
         return {"_fake_db_name": name}
 
-    def close(self):
+    def close(self) -> None:
         self.closed = True
 
 class FakeBadMongoClient: 
-    def __init__(self, uri) -> None:
-        raise RuntimeError("caca")
+    def __init__(self, uri: str) -> None:
+        raise RuntimeError("boom")
 
 def test_connect_read_only_success(monkeypatch, capsys) -> None:
     monkeypatch.setattr("cfg.db.classes.connect.MongoClient", FakeMongoClient)

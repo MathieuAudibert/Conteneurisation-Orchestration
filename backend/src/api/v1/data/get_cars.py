@@ -1,10 +1,11 @@
+from typing import Any
 from fastapi import APIRouter, HTTPException
 from backend.src.core.db.doctrine import Doctrine
 
 router = APIRouter(prefix="/api/v1/data", tags=["data"])
 
 @router.get("/cars")
-def get_all_cars():# -> dict[str, Any]:
+def get_all_cars() -> dict[str, Any]:
     try:
         doctrine = Doctrine()
         cars = doctrine.select_all("cars")
@@ -20,7 +21,7 @@ def get_all_cars():# -> dict[str, Any]:
         raise HTTPException(status_code=500, detail=f"Error fetching cars: {str(e)}")
 
 @router.get("/cars/stats")
-def get_cars_stats():# -> dict[str, Any]:
+def get_cars_stats() -> dict[str, Any]:
     """Get statistics about cars"""
     try:
         doctrine = Doctrine()

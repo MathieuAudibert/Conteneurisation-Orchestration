@@ -1,11 +1,11 @@
 import datetime
 import logging
 import pandas as pd
-from typing import Optional
+from typing import Any, Optional
 from backend.src.core.logger import get_logger
 from backend.src.etl.extract import extract
 
-def _to_bool(x) -> bool:
+def _to_bool(x: Any) -> bool:
     if pd.isna(x):
         return False
     if isinstance(x, bool):
@@ -13,7 +13,7 @@ def _to_bool(x) -> bool:
     s = str(x).strip().lower()
     return s in {"true", "t", "yes", "y", "1"}
 
-def _to_int_safe(x) -> None | int:
+def _to_int_safe(x: Any) -> None | int:
     if pd.isna(x):
         return None
     try:
